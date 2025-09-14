@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     public float speed = 0.0f;
     // 範囲制限 -- Range limit
     public float xRange = 10.0f;
+    // 物を宣言する
+    public GameObject projectilePrefabs;
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,5 +34,11 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         // プレイヤーを動かす
         transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
+
+        // 物を投げる
+        if(Input.GetKeyDown(KeyCode.Space))
+        {            
+            Instantiate(projectilePrefabs, projectilePrefabs.transform.position, projectilePrefabs.transform.rotation);
+        }
     }
 }
