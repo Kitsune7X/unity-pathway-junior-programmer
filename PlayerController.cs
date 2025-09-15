@@ -4,10 +4,13 @@ public class PlayerController : MonoBehaviour
 {
     // ユーザーの入力宣言
     private float horizontalInput = 0.0f;
+    private float verticalInput = 0.0f;
     // 速度宣言
     public float speed = 0.0f;
     // 範囲制限 -- Range limit
     public float xRange = 10.0f;
+    public float zRange = 13.0f;
+    private float origPos = 0.0f;
     // 物を宣言する
     public GameObject projectilePrefabs;
     // オフセット値
@@ -35,11 +38,20 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
-        // ユーザーの入力を受け取る
+        if (transform.position.z > zRange)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, zRange);
+        }
+        if (transform.position.z < origPos)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, origPos);
+        }
+        // ユーザー操作
         horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
         // プレイヤーを動かす
         transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
-
+        transform.Translate(Vector3.forward * verticalInput * Time.deltaTime * speed);
         // 物を投げる
         if(Input.GetKeyDown(KeyCode.Space))
         {            

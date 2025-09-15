@@ -8,6 +8,7 @@ public class SpawnManager : MonoBehaviour
     // ランダム範囲 -- Randomize range
     public float randomRangeX = 20.0f;
     public float randomRangeZ = 20.0f;
+    private float sideSpawnLimit = 5.0f;
 
     // 生成の初めて時　-- Spawn start time
     public float spawnTime = 2.0f;
@@ -31,10 +32,17 @@ public class SpawnManager : MonoBehaviour
     {
         // ランダムを選択した場合
         int animalIndex = Random.Range(0, animalPrefabs.Length);
+        Quaternion newRotation1 = animalPrefabs[animalIndex].transform.rotation * Quaternion.Euler(0.0f, 90.0f, 0.0f);
+        Quaternion newRotation2 = animalPrefabs[animalIndex].transform.rotation * Quaternion.Euler(0.0f, -90.0f, 0.0f);
 
         // 生成地点　-- Spawn Point
         Vector3 spawnPoint = new Vector3(Random.Range(-randomRangeX, randomRangeX), 0.0f, randomRangeZ);
+        Vector3 spawnPointside1 = new Vector3(randomRangeX, 0.0f, Random.Range(sideSpawnLimit, randomRangeZ));
+        Vector3 spawnPointside2 = new Vector3(-randomRangeX, 0.0f, Random.Range(sideSpawnLimit, randomRangeZ));
+
         // 動物を生成
-        Instantiate(animalPrefabs[animalIndex], spawnPoint, animalPrefabs[animalIndex].transform.rotation);
+        Instantiate(animalPrefabs[animalIndex], spawnPoint, animalPrefabs[animalIndex].transform.rotation);        
+        Instantiate(animalPrefabs[animalIndex], spawnPointside1, newRotation1);
+        Instantiate(animalPrefabs[animalIndex], spawnPointside2, newRotation2);
     }
 }

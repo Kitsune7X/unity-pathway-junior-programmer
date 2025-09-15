@@ -7,10 +7,13 @@ public class DestroyOutBound : MonoBehaviour
     // 下方向の境界範囲 -- Low Bound range
     public float lowBound = -10;
 
+    // GameManager参照
+    private GameManger gameManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        gameManager = FindAnyObjectByType<GameManger>();
     }
 
     // Update is called once per frame
@@ -23,8 +26,8 @@ public class DestroyOutBound : MonoBehaviour
         }
         else if (transform.position.z <= lowBound)
         {
-            Debug.Log("Game Over !");
             Destroy(gameObject);
+            gameManager.HPreduce();
         }
     }
 }
