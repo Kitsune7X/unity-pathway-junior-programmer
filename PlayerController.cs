@@ -10,12 +10,17 @@ public class PlayerController : MonoBehaviour
     public float xRange = 10.0f;
     // 物を宣言する
     public GameObject projectilePrefabs;
+    // オフセット値
+    public float offsetValue = 0.0f;
+    // オフセット   
+    Vector3 offset;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        // オフセット指定 -- Assign offset value
+        offset = new Vector3(0.0f, offsetValue, 0.0f);
     }
 
     // Update is called once per frame
@@ -38,7 +43,7 @@ public class PlayerController : MonoBehaviour
         // 物を投げる
         if(Input.GetKeyDown(KeyCode.Space))
         {            
-            Instantiate(projectilePrefabs, projectilePrefabs.transform.position, projectilePrefabs.transform.rotation);
+            Instantiate(projectilePrefabs, transform.position + offset, projectilePrefabs.transform.rotation);
         }
     }
 }
