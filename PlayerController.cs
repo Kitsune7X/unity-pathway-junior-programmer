@@ -4,15 +4,14 @@ public class PlayerController : MonoBehaviour
 {
     // Rigidbody 変数宣言　--  Declare Rigidbody variable
     private Rigidbody playerRb;
-
     // ジャンプ力　-- Jump force variable
     public float jumpForce = 10.0f;
-
     // 重力変更するもの　-- Gravity Modifier variable
     public float gravityModifier = 1.0f;
-
     // Is on ground boolean variable
     public bool isOnGround = true;
+    // ゲームオーバー変数 -- Game Over variable
+    public bool gameOver = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,9 +34,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // On Ground switch
+    // On Ground & Game Over switch
     void OnCollisionEnter(Collision collision)
     {
-        isOnGround = true;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true; // ジャンプスイッチ　-- Jump switch
+        }
+        else if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Game Over"); 
+            gameOver = true; // ゲームオーバースイッチ　-- Game Over switch
+        }
     }
 }
